@@ -1,15 +1,15 @@
-package com.tcbd07.mintproject.service;
+package com.tcbd07.mintproject.service.impl;
 
 import com.tcbd07.mintproject.dao.newsDao;
 import com.tcbd07.mintproject.entity.News;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.tcbd07.mintproject.service.NewsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class NewsServiceImpl  implements NewsService{
+public class NewsServiceImpl  implements NewsService {
     @Resource
     newsDao dao;
     @Override
