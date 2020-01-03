@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcbd07.mintproject.dao.newsDao">
+    <select id="showNews" resultType="com.tcbd07.mintproject.entity.News">
+        select * from nd_news
+        <if test="title!=null">
+            where  news_title like  "%" #{title} "%"
+        </if>
+    </select>
+    <insert id="addNews" parameterType="com.tcbd07.mintproject.entity.News">
+        insert into nd_news（news_status，news_title,news_content,news_owner,news_createdTime,news_verifiedTime,news_updatedTime,new_type）
+         values (0,#{news_title},#{news_content},#{news_owner},now(),now(),now(),1)
+    </insert>
+
+
+    <update id="updateNews" parameterType="com.tcbd07.mintproject.entity.News">
+        update nd_news set news_title=#{news_title},news_content=#{news_content},
+        news_updatedTime=now() where news_id=#{news_id}
+    </update>
+
+    <update id="delNews" parameterType="com.tcbd07.mintproject.entity.News">
+        update nd_news set news_status=0 where news_id=#{id}
+    </update>
+
+    <select id="seleOneNews" resultType="com.tcbd07.mintproject.entity.News" >
+        select * from nd_news where news_id=#{id}
+    </select>
+</mapper>
