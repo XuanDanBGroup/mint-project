@@ -1,21 +1,7 @@
 package com.tcbd07.mintproject.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.tcbd07.mintproject.dao.NewsESRepository;
-import com.tcbd07.mintproject.entity.News;
-import com.tcbd07.mintproject.service.NewsService;
-import com.tcbd07.mintproject.util.ResultMessage;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +15,8 @@ public class NewsController {
 
     @RequestMapping("/")
     public String home(){
+
+        return "template";
         return "login";
     }
 
@@ -56,4 +44,5 @@ public class NewsController {
         map.put("count",count);
         return ResultMessage.success(map);
     }
+
 }
