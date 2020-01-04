@@ -2,11 +2,10 @@ package com.tcbd07.mintproject.dao;
 
 import com.tcbd07.mintproject.entity.News;
 import org.apache.ibatis.annotations.Param;
-import org.hibernate.validator.constraints.SafeHtml;
 
 import java.util.List;
 
-public interface newsDao {
+public interface NewsDao {
     /**
      * 新闻展示
      * @param title 按标题模糊查询（待定）

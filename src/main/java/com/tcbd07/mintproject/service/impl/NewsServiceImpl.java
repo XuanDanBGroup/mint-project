@@ -1,6 +1,6 @@
 package com.tcbd07.mintproject.service.impl;
 
-import com.tcbd07.mintproject.dao.newsDao;
+import com.tcbd07.mintproject.dao.NewsDao;
 import com.tcbd07.mintproject.entity.News;
 import com.tcbd07.mintproject.service.NewsService;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class NewsServiceImpl  implements NewsService {
     @Resource
-    newsDao dao;
+    private NewsDao dao;
     @Override
     public List<News> showNews(String title) {
         return dao.showNews(title);
