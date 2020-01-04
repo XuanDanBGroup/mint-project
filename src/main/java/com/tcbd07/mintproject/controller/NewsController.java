@@ -7,10 +7,7 @@ import com.tcbd07.mintproject.service.NewsService;
 import com.tcbd07.mintproject.util.ActiveMQUtils;
 import com.tcbd07.mintproject.util.CommonEnum;
 import com.tcbd07.mintproject.util.ResultMessage;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Api(tags = "新闻展示")
 public class NewsController {
     @Autowired
     private NewsService newsService;
