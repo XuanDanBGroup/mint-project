@@ -1,7 +1,21 @@
 package com.tcbd07.mintproject.controller;
 
-import org.springframework.stereotype.Controller;
+import com.alibaba.fastjson.JSON;
+import com.tcbd07.mintproject.dao.NewsESRepository;
+import com.tcbd07.mintproject.entity.News;
+import com.tcbd07.mintproject.service.NewsService;
+import com.tcbd07.mintproject.util.ResultMessage;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +30,6 @@ public class NewsController {
     @RequestMapping("/")
     public String home(){
 
-        return "template";
         return "login";
     }
 
@@ -38,7 +51,7 @@ public class NewsController {
         Page<News> items=newsESRepository.search(nativeSearchQueryBuilder.build());
         Long count=items.getTotalElements();
         Map<String ,Object>  map=new HashMap<>();
-       String s=JSON.toJSONString(items);
+       String s= JSON.toJSONString(items);
         System.out.println(s);
         map.put("newsList",s);
         map.put("count",count);
