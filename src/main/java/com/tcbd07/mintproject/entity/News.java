@@ -1,11 +1,20 @@
 package com.tcbd07.mintproject.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import java.io.Serializable;
 import java.sql.Date;
-
+@Document(indexName = "news",type = "doc",shards = 1,replicas = 0)
 public class News implements Serializable {
-    private Integer news_id,news_type,news_level,news_index,news_status;
-    private String news_title,news_content,news_owner;
+    @Id
+    private Integer news_id;
+    private Integer news_type,news_level,news_index,news_status;
+    private String news_content,news_owner;
+    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    private String news_title;
     private Date news_createdTime,news_verifiedTime,news_updatedTime;
 
     @Override

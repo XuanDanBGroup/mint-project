@@ -1,11 +1,12 @@
 package com.tcbd07.mintproject.dao;
 
 import com.tcbd07.mintproject.entity.News;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.hibernate.validator.constraints.SafeHtml;
+
 
 import java.util.List;
-
+@Mapper
 public interface newsDao {
     /**
      * 新闻展示
