@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcbd07.mintproject.dao.ProgramsVoDao">
+    <select id="queryAllProgramsVo" resultMap="m1" >
+        select p.* ,u.* from nd_programs p,nd_users u ,mid_programs_firms f
+        where f.firm_id=u.user_id and f.program_id=p.program_id
+    </select>
+    <resultMap id="m1" type="com.tcbd07.mintproject.entity.ProgramsVo">
+        <id property="programId" column="program_id"></id>
+        <result property="programTitle" column="program_title"></result>
+        <result property="programContent" column="program_content"></result>
+        <result property="programComment" column="program_comment"></result>
+        <result property="programStatus" column="program_status"></result>
+        <collection property="userList" ofType="com.tcbd07.mintproject.entity.User">
+            <id property="userId" column="user_id"></id>
+            <result property="userWebName" column="user_web_name"></result>
+            <result property="userPhone" column="user_phone"></result>
+            <result property="userPassword" column="user_password"></result>
+            <result property="userRole" column="user_role"></result>
+            <result property="userStatus" column="user_status"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="m2" type="com.tcbd07.mintproject.entity.User">
+        <id property="userId" column="user_id"></id>
+        <result property="userWebName" column="user_web_name"></result>
+        <result property="userPhone" column="user_phone"></result>
+        <result property="userPassword" column="user_password"></result>
+        <result property="userRole" column="user_role"></result>
+        <result property="userStatus" column="user_status"></result>
+    </resultMap>
+    <select id="getProgramsVo" resultMap="m1" parameterType="String">
+        select p.* ,u.* from nd_programs p,nd_users u ,mid_programs_firms f
+        where f.firm_id=u.user_id and f.program_id=p.program_id and p.program_id=#{programId}
+    </select>
+    <select id="getAllFirms" resultMap="m2" parameterType="String">
+        select * from nd_users u where u.user_id in (select client_id from mid_clients_firms where firms_id=#{firmId})
+    </select>
+
+
+
+</mapper>
