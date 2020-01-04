@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NewsServiceImpl  implements NewsService {
@@ -15,6 +16,11 @@ public class NewsServiceImpl  implements NewsService {
     @Override
     public List<News> showNews(String title) {
         return dao.showNews(title);
+    }
+
+    @Override
+    public List<News> showMyNews(String owner) {
+        return dao.showMyNews(owner);
     }
 
     @Override
@@ -44,5 +50,10 @@ public class NewsServiceImpl  implements NewsService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String selTitle(Integer id) {
+        return dao.selTitle(id);
     }
 }

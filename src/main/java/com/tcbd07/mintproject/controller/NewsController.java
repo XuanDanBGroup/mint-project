@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,11 +39,6 @@ public class NewsController {
         return "login";
     }
 
-    /**
-     * 查询新闻
-     * @param key
-     * @return
-     */
     @ApiOperation(value = "这是查询新闻功能",notes = "输入新闻名称模糊查询")
     @ApiImplicitParam(name = "key",value = "key",dataType = "String",example = "新闻")
     @ApiResponses(value = {
@@ -62,6 +58,60 @@ public class NewsController {
         map.put("count",count);
         return ResultMessage.success(map);
     }
+    @ApiOperation(value = "查询我的新闻",notes = "点击我的新闻进入")
+    @ApiImplicitParam(name = "owner",value = "owner",dataType = "String",example = "商家id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,message = "查询成功"),
+            @ApiResponse(code = 403,message = "网络异常")
+    })
+    @GetMapping("/myNews")
+    public ResultMessage myNews(String owner){
+       List<News> news=newsService.showMyNews(owner);
+      return ResultMessage.success(news);
+    }
+    @ApiOperation(value = "这是查询单个新闻功能",notes = "点击新闻进入单个新闻")
+    @ApiImplicitParam(name = "id",value = "id",dataType = "int",example = "新闻主键")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,message = "查询成功")
+    })
+    @GetMapping("/OneNews")
+    public ResultMessage OneNews(Integer id){
+        News news=newsService.seleOneNews(id);
+
+        return ResultMessage.success(news);
+    }
+//    @ApiOperation(value = "查询单个新闻下面的上一篇下一篇功能",notes = "点击新闻进入单个新闻时agax请求")
+//    @ApiImplicitParam(name = "id",value = "id",dataType = "int",example = "查询单个新闻的新闻主键")
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200,message = "查询成功")
+//    })
+//    @GetMapping("/upAndDownNews")
+//    public ResultMessage upAndDownNews(Integer id){
+//        HashMap<Integer,String>map=new HashMap<Integer,String>();
+//        map.put(id+1,newsService.selTitle(id+1));
+//        map.put(id-1,newsService.selTitle(id-1));
+//        return ResultMessage.success(map);
+//    }
+    @ApiOperation(value = "删除新闻",notes = "点击删除键进入")
+    @ApiImplicitParam(name = "id",value = "id",dataType = "int",example = "新闻主键")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200,message = "查询成功"),
+            @ApiResponse(code = 403,message = "网络异常")
+    })
+    @GetMapping("/delNews")
+    public ResultMessage delNews(Integer id){
+        if(newsService.delNews(id)){
+            return ResultMessage.success("200","删除成功！");
+        }
+        return ResultMessage.success("403","网络异常，请稍候重试！");
+    }
+
+
+
+
+
+
+
 
     @ApiOperation(value = "这是添加新闻功能",notes = "查询新闻")
     @ApiImplicitParam(name = "news",value = "news",dataType = "News")
