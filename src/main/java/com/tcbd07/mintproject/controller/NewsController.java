@@ -84,7 +84,7 @@ public class NewsController {
     @GetMapping("/delNews")
     public ResultMessage delNews(String id){
         if(newsService.delNews(id)){
-
+            newsESService.deleteNews(id);
             return ResultMessage.success("200","删除成功！");
         }
         return ResultMessage.success("403","网络异常，请稍候重试！");
@@ -146,6 +146,7 @@ public class NewsController {
         news.setNews_title(title);
         news.setNews_id(news_id);
         if(newsService.updateNews(news)){
+            newsESService.deleteNews(news.getNews_id());
             rabbitSender.send("addNews");
             return ResultMessage.success();
         }else{
