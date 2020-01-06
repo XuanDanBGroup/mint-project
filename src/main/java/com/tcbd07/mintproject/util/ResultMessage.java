@@ -100,7 +100,7 @@ public class ResultMessage {
      * @param message 错误信息
      * @return
      */
-    public static ResultMessage erro(String code,String message){
+    public static ResultMessage error(String code,String message){
         ResultMessage resultMessage=new ResultMessage();
         resultMessage.setCode(code);
         resultMessage.setMessage(message);

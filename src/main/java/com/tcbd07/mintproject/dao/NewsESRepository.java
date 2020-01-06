@@ -1,6 +1,6 @@
 package com.tcbd07.mintproject.dao;
 
-import com.tcbd07.mintproject.entity.News;
+import com.tcbd07.mintproject.entity.Nd_News;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @Version 1.0
  */
 
-public interface NewsESRepository extends ElasticsearchRepository<News,String> {
+public interface NewsESRepository extends ElasticsearchRepository<Nd_News,String> {
 }

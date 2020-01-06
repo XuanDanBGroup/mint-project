@@ -5,22 +5,20 @@ import com.alibaba.fastjson.JSON;
 import com.tcbd07.mintproject.entity.Dto;
 import com.tcbd07.mintproject.entity.User;
 import com.tcbd07.mintproject.service.LoginService;
-import com.tcbd07.mintproject.util.*;
+import com.tcbd07.mintproject.util.DtoUtils;
+import com.tcbd07.mintproject.util.MD5;
+import com.tcbd07.mintproject.util.RedisUtil;
+import com.tcbd07.mintproject.util.UserAgentUtil;
 import cz.mallat.uasparser.UserAgentInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -83,14 +81,14 @@ public class UserController {
 
         String tokenKey="xs"+user.getUserId();
         String tokenValue=null;
-        if ((tokenValue=(String) redisUtil.get(tokenKey))!=null){
+        if ((tokenValue=(String) redisUtil.getObj(tokenKey))!=null){
             //说明用户已经登陆过，而且没过期
-            redisUtil.delete(tokenKey);
+            redisUtil.del(tokenKey);
         }
         //缓存用户
-        redisUtil.set(tokenKey,20,token);
+        redisUtil.setStr(tokenKey,token,60L);
         //缓存详细信息
-        redisUtil.set(token,20, JSON.toJSONString(user));
+        redisUtil.setStr(token,JSON.toJSONString(user),60L);
 
     }
 
