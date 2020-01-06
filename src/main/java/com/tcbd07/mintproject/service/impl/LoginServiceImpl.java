@@ -11,8 +11,16 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     LoginDao dao;
     @Override
-    public User login(String phone) {
-
-        return dao.login(phone);
+    public User login(String phone,String pwd) {
+        User user=dao.login(phone);
+        if (user==null){
+            return null;
+        }else{
+            if (user.getUserPassword().equalsIgnoreCase(pwd)){
+                return user;
+            }else {
+                return null;
+            }
+        }
     }
 }

@@ -10,5 +10,5 @@ public interface LoginService {
      *
      * @return 用户
      */
-    User login( String phone);
+    User login( String phone,String pwd);
 }

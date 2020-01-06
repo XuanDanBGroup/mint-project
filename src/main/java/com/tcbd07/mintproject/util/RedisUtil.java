@@ -1,117 +1,122 @@
 package com.tcbd07.mintproject.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisUtil {
 
-    @Autowired
-    StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
 
-    @Autowired
-    RedisTemplate<Object, Object> redisTemplate;
+    public boolean set(String key,String value){
+        try {
+            redisTemplate.setKeySerializer(new StringRedisSerializer());
+            redisTemplate.setValueSerializer(new StringRedisSerializer());
 
-    @Resource(name = "stringRedisTemplate")
-    ValueOperations<String, String> valOpsStr;
-
-    @Resource(name = "redisTemplate")
-    ValueOperations<Object, Object> valOpsObj;
-
-    /**
-     * 根据指定key获取String
-     * @param key
-     * @return
-     */
-    public String getStr(String key){
-        return valOpsStr.get(key);
+            ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+            vo.set(key,value);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    /**
-     * 设置Str缓存
-     * @param key
-     * @param val
-     */
-    public void setStr(String key, String val){
-        valOpsStr.set(key,val);
+    public boolean set(String key,long seconds,String value){
+        try {
+            redisTemplate.setKeySerializer(new StringRedisSerializer());
+            redisTemplate.setValueSerializer(new StringRedisSerializer());
+
+            ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+            vo.set(key,value);
+            expire(key,seconds);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    /***
-     * 设置Str缓存
-     * @param key
-     * @param val
-     * @param expire 超时时间
-     */
-    public void setStr(String key, String val,Long expire){
-        valOpsStr.set(key,val,expire, TimeUnit.MINUTES);
-    }
-
-    /**
-     * 删除指定key
-     * @param key
-     */
-    public void del(String key){
-        stringRedisTemplate.delete(key);
-    }
-
-    /**
-     * 根据指定o获取Object
-     * @param o
-     * @return
-     */
-    public Object getObj(Object o){
-        return valOpsObj.get(o);
-    }
-
-    /**
-     * 设置obj缓存
-     * @param o1
-     * @param o2
-     */
-    public void setObj(Object o1, Object o2){
-        valOpsObj.set(o1, o2);
-    }
-
-    /**
-     * 删除Obj缓存
-     * @param o
-     */
-    public void delObj(Object o){
-        redisTemplate.delete(o);
-    }
-    /***
-     * 加锁的方法
-     * @return
-     */
-    public boolean lock(String key,Long expire){
-       RedisConnection redisConnection=redisTemplate.getConnectionFactory().getConnection();
-       //设置序列化方法
-       redisTemplate.setKeySerializer(new StringRedisSerializer());
-       redisTemplate.setValueSerializer(new StringRedisSerializer());
-       if(redisConnection.setNX(key.getBytes(),new byte[]{1})){
-           redisTemplate.expire(key,expire,TimeUnit.SECONDS);
-           redisConnection.close();
-           return true;
-       }else{
-           redisConnection.close();
-           return false;
-       }
-    }
-    /***
-     * 解锁的方法
-     * @param key
-     */
-    public void unLock(String key){
+    public Long getExpire(String key){
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new StringRedisSerializer());
-        redisTemplate.delete(key);
+        ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+        return redisTemplate.getExpire(key);
     }
+
+    public boolean expire(final String key,final long expireTime){
+        return redisTemplate.execute(new RedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                boolean flag=false;
+                try {
+                    redisTemplate.setKeySerializer(new StringRedisSerializer());
+                    redisTemplate.setValueSerializer(new StringRedisSerializer());
+                    byte keys[]=new StringRedisSerializer().serialize(key);
+                    flag=redisConnection.expire(keys,expireTime);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                return flag;
+            }
+        });
+    }
+
+    public Object get(String key){
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+        return vo.get(key);
+    }
+
+    public void delete(String key){
+        try {
+            redisTemplate.setKeySerializer(new StringRedisSerializer());
+            redisTemplate.setValueSerializer(new StringRedisSerializer());
+            redisTemplate.delete(key);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean exist(String key){
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+        Object value = vo.get(key);
+        if (value==null||value==""){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean update(String key,String value){
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        ValueOperations<String,Object> vo=redisTemplate.opsForValue();
+
+        Long expireTime=redisTemplate.getExpire(key);
+        if (expireTime==null){
+            return false;
+        }
+        if (expireTime==-2||expireTime==0){
+            return false;
+        }
+        vo.set(key,value);
+        if (expireTime>0){
+            expire(key,expireTime);
+        }
+        return true;
+    }
+
+
 }
