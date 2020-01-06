@@ -27,9 +27,9 @@
                 news_content=#{news_content},
             </if>
             <if test="news_content!=null and news_content!='' or news_title!=null and news_title!='' ">
-
+                news_updatedTime=now(),news_status=0
             </if>
-            news_updatedTime=now(),news_status=0
+
         </set>
 
         where news_id=#{news_id}
