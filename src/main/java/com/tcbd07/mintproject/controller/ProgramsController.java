@@ -20,7 +20,7 @@ public class ProgramsController {
     @Autowired
     private ProgramsVoService programsVoService;
 
-    @ApiOperation(value = "查询所有项目（含商家）",notes = "请仔细查看！")
+    @ApiOperation(value = "查询所有项目（含商家）",notes = "无参")
     @ApiResponses(value = {
             @ApiResponse(code = 200,message = "查询成功"),
             @ApiResponse(code = 403,message = "网络异常")
@@ -30,7 +30,7 @@ public class ProgramsController {
         List<ProgramsVo> programsVoList = programsVoService.queryAllProgramsVo();
         return ResultMessage.success(programsVoList);
     }
-    @ApiOperation(value = "根据项目id查询单个项目（含商家）",notes = "请仔细查看！")
+    @ApiOperation(value = "根据项目id查询单个项目（含商家）",notes = "一个参数，请输入programId！")
     @ApiImplicitParam(name = "programId",value = "programId",dataType = "String",example = "项目id")
     @ApiResponses(value = {
             @ApiResponse(code = 200,message = "查询成功"),
@@ -42,7 +42,7 @@ public class ProgramsController {
         return ResultMessage.success(programsVo);
     }
 
-    @ApiOperation(value = "根据商家id查询用户",notes = "请仔细查看！，多个商户")
+    @ApiOperation(value = "根据商家id查询用户",notes = "一个参数，请输入firmId")
     @ApiImplicitParam(name = "firmId",value = "firmId",dataType = "String",example = "商家id")
     @ApiResponses(value = {
             @ApiResponse(code = 200,message = "查询成功"),

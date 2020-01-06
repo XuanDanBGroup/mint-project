@@ -31,11 +31,7 @@ public class NewsController {
     @Autowired
     private ActiveMQUtils activeMQUtils;
 
-    @RequestMapping("/")
-    public String home(){
 
-        return "login";
-    }
 
     @ApiOperation(value = "这是查询新闻功能",notes = "输入新闻名称模糊查询")
     @ApiImplicitParam(name = "key",value = "key",dataType = "String",example = "新闻")
