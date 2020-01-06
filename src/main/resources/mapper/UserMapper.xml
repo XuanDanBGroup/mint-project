@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcbd07.mintproject.dao.LoginDao">
+    <select id="login" resultMap="m2" >
+        select * from nd_users where user_phone=#{phone}
+
+    </select>
+    <resultMap id="m2" type="com.tcbd07.mintproject.entity.User">
+        <id property="userId" column="user_id"></id>
+        <result property="userWebName" column="user_web_name"></result>
+        <result property="userPhone" column="user_phone"></result>
+        <result property="userPassword" column="user_password"></result>
+        <result property="userRole" column="user_role"></result>
+        <result property="userStatus" column="user_status"></result>
+    </resultMap>
+
+
+</mapper>

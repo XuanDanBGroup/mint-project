@@ -1,6 +1,7 @@
 package com.tcbd07.mintproject.controller;
 
 import com.tcbd07.mintproject.entity.News;
+import com.tcbd07.mintproject.service.LoginService;
 import com.tcbd07.mintproject.service.NewsESService;
 import com.tcbd07.mintproject.service.NewsService;
 import com.tcbd07.mintproject.util.*;
@@ -23,6 +24,7 @@ public class NewsController {
     private NewsESService newsESService;
     @Autowired
     private ActiveMQUtils activeMQUtils;
+
     @Resource
     private RabbitSender rabbitSender;
 
