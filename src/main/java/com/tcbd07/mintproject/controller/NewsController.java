@@ -3,10 +3,7 @@ package com.tcbd07.mintproject.controller;
 import com.tcbd07.mintproject.entity.News;
 import com.tcbd07.mintproject.service.NewsESService;
 import com.tcbd07.mintproject.service.NewsService;
-import com.tcbd07.mintproject.util.ActiveMQUtils;
-import com.tcbd07.mintproject.util.CommonEnum;
-import com.tcbd07.mintproject.util.IdWorker;
-import com.tcbd07.mintproject.util.ResultMessage;
+import com.tcbd07.mintproject.util.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
@@ -25,6 +23,8 @@ public class NewsController {
     private NewsESService newsESService;
     @Autowired
     private ActiveMQUtils activeMQUtils;
+    @Resource
+    private RabbitSender rabbitSender;
 
 
     @ApiOperation(value = "这是查询新闻功能",notes = "输入新闻名称模糊查询")
@@ -93,12 +93,10 @@ public class NewsController {
             @ApiResponse(code = 201, message="啥也不是，就想传一个码")
     })
     @PostMapping("/addNews")
-    public ResultMessage addNews(News news){
-
+    public ResultMessage addNews(News news) throws Exception {
        news.setNews_id(IdWorker.getId());
         if(newsService.addNews(news)){
-
-            activeMQUtils.sendQueueMesage("addNews",1);
+            rabbitSender.send("addNews");
             return ResultMessage.success();
         }else{
             return ResultMessage.error(CommonEnum.USER_NOT_NULL);
@@ -114,12 +112,10 @@ public class NewsController {
             @ApiResponse(code = 201, message="啥也不是，就想传一个码")
     })
     @PostMapping("/updateNews")
-    public ResultMessage updateNews(News news){
+    public ResultMessage updateNews(News news) throws Exception {
 
         if(newsService.updateNews(news)){
-
-            activeMQUtils.sendQueueMesage("addNews",1);
-
+            rabbitSender.send("addNews");
             return ResultMessage.success();
         }else{
             return ResultMessage.error(CommonEnum.USER_NOT_NULL);
