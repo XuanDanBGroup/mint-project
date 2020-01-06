@@ -1,11 +1,8 @@
 package com.tcbd07.mintproject.service;
 
 import com.tcbd07.mintproject.entity.News;
-import org.apache.ibatis.annotations.Param;
-
 
 import java.util.List;
-import java.util.Map;
 
 public interface NewsService {
     /**
@@ -27,7 +24,7 @@ public interface NewsService {
      * @param id 按id查询单条新闻详情
      * @return 单条新闻信息
      */
-    News seleOneNews( Integer id);
+    News seleOneNews( String id);
 
     /**
      * 添加新闻
@@ -48,7 +45,7 @@ public interface NewsService {
      * @param id 新闻id
      * @return 1成功0失败
      */
-    boolean delNews( int id);
+    boolean delNews( String id);
     /**
      * 查询标题（单个信息展示的上一篇下一篇）
      * @param id 用id查（查单个时id加减）

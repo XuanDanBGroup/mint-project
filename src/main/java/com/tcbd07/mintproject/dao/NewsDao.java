@@ -4,7 +4,6 @@ import com.tcbd07.mintproject.entity.News;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 public interface NewsDao {
     /**
@@ -26,7 +25,7 @@ public interface NewsDao {
      * @param id 按id查询单条新闻详情
      * @return 单条新闻信息
      */
-    News seleOneNews(@Param("id") Integer id);
+    News seleOneNews(@Param("id") String id);
 
     /**
      * 添加新闻
@@ -47,7 +46,7 @@ public interface NewsDao {
      * @param id 新闻id
      * @return 1成功0失败
      */
-    int delNews(@Param("id") int id);
+    int delNews(@Param("id") String id);
 
     /**
      * 查询标题（单个信息展示的上一篇下一篇）

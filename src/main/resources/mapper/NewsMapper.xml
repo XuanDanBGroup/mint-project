@@ -8,22 +8,36 @@
         </if>
     </select>
     <select id="showMyNews" resultType="com.tcbd07.mintproject.entity.News">
-        select * from nd_news where news_owner=#{woner}
+        select * from nd_news where news_owner=#{owner}
     </select>
 
     <insert id="addNews" parameterType="com.tcbd07.mintproject.entity.News">
-        insert into nd_news（news_status，news_title,news_content,news_owner,news_createdTime,news_verifiedTime,news_updatedTime,new_type）
-         values (0,#{news_title},#{news_content},#{news_owner},now(),now(),now(),1)
+        insert into nd_news(news_id,news_status,news_title,news_content,news_owner,news_createdTime,news_verifiedTime,news_updatedTime,news_type )
+         values (#{news_id},0,#{news_title},#{news_content},#{news_owner},now(),now(),now(),1)
     </insert>
 
 
     <update id="updateNews" parameterType="com.tcbd07.mintproject.entity.News">
-        update nd_news set news_title=#{news_title},news_content=#{news_content},
-        news_updatedTime=now(),news_status=0 where news_id=#{news_id}
+        update nd_news
+        <set>
+            <if test="news_title!=null and news_title!='' ">
+                news_title=#{news_title},
+            </if>
+            <if test="news_content!=null and news_content!='' ">
+                news_content=#{news_content},
+            </if>
+            <if test="news_content!=null and news_content!='' or news_title!=null and news_title!='' ">
+
+            </if>
+            news_updatedTime=now(),news_status=0
+        </set>
+
+        where news_id=#{news_id}
     </update>
 
     <update id="delNews" parameterType="com.tcbd07.mintproject.entity.News">
-        update nd_news set news_status=0 where news_id=#{id}
+        update nd_news set news_status=4
+         where news_id=#{id}
     </update>
 
     <select id="seleOneNews" resultType="com.tcbd07.mintproject.entity.News" >
