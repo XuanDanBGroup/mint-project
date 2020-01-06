@@ -10,7 +10,7 @@ import java.sql.Date;
 @Document(indexName = "news",type = "doc",shards = 1,replicas = 0)
 public class News implements Serializable {
     @Id
-    private Integer news_id;
+    private String news_id;
     private Integer news_type,news_level,news_index,news_status;
     private String news_content,news_owner;
     @Field(type = FieldType.Text,analyzer = "ik_max_word")
@@ -34,11 +34,11 @@ public class News implements Serializable {
                 '}';
     }
 
-    public Integer getNews_id() {
+    public String getNews_id() {
         return news_id;
     }
 
-    public void setNews_id(Integer news_id) {
+    public void setNews_id(String news_id) {
         this.news_id = news_id;
     }
 

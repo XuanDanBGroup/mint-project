@@ -9,5 +9,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @Version 1.0
  */
 
-public interface NewsESRepository extends ElasticsearchRepository<News,Integer> {
+public interface NewsESRepository extends ElasticsearchRepository<News,String> {
 }

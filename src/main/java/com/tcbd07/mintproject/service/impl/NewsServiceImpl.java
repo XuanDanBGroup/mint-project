@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class NewsServiceImpl  implements NewsService {
@@ -24,7 +23,7 @@ public class NewsServiceImpl  implements NewsService {
     }
 
     @Override
-    public News seleOneNews(Integer id) {
+    public News seleOneNews(String id) {
         return dao.seleOneNews(id);
     }
 
@@ -45,7 +44,7 @@ public class NewsServiceImpl  implements NewsService {
     }
 
     @Override
-    public boolean delNews(int id) {
+    public boolean delNews(String id) {
         if(dao.delNews(id)>0){
             return true;
         }
