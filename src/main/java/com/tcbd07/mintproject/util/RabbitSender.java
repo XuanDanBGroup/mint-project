@@ -51,7 +51,7 @@ public class RabbitSender {
         rabbitTemplate.setReturnCallback(returnCallback);
 
         CorrelationData correlationData=new CorrelationData("1234567890");
-        rabbitTemplate.convertAndSend("jhj01","boot.abc",msg,correlationData);
+        rabbitTemplate.convertAndSend("jhj01","abc",msg,correlationData);
 
 
     }

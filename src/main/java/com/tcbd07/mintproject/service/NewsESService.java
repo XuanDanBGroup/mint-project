@@ -1,6 +1,6 @@
 package com.tcbd07.mintproject.service;
 
-import com.tcbd07.mintproject.entity.News;
+import com.tcbd07.mintproject.entity.Nd_News;
 
 import java.util.List;
 
@@ -16,20 +16,20 @@ public interface NewsESService {
      * @param news
      * @return
      */
-    News esAddNews(News news);
+    Nd_News esAddNews(Nd_News news);
 
     /**
      * es查询所有新闻
      * @return
      */
-    List<News> getAllNews();
+    List<Nd_News> getAllNews();
 
     /**
      * es根据新闻标题查询新闻
      * @param title
      * @return
      */
-    List<News> getNewsByTitle(String title);
+    List<Nd_News> getNewsByTitle(String title);
 
     /**
      * es根据ID删除ID

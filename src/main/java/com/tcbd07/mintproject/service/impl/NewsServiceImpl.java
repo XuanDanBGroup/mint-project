@@ -1,7 +1,7 @@
 package com.tcbd07.mintproject.service.impl;
 
 import com.tcbd07.mintproject.dao.NewsDao;
-import com.tcbd07.mintproject.entity.News;
+import com.tcbd07.mintproject.entity.Nd_News;
 import com.tcbd07.mintproject.service.NewsService;
 import org.springframework.stereotype.Service;
 
@@ -13,22 +13,22 @@ public class NewsServiceImpl  implements NewsService {
     @Resource
     private NewsDao dao;
     @Override
-    public List<News> showNews(String title) {
+    public List<Nd_News> showNews(String title) {
         return dao.showNews(title);
     }
 
     @Override
-    public List<News> showMyNews(String owner) {
+    public List<Nd_News> showMyNews(String owner) {
         return dao.showMyNews(owner);
     }
 
     @Override
-    public News seleOneNews(String id) {
+    public Nd_News seleOneNews(String id) {
         return dao.seleOneNews(id);
     }
 
     @Override
-    public boolean addNews(News news) {
+    public boolean addNews(Nd_News news) {
         if(dao.addNews(news)>0){
             return true;
         }
@@ -36,7 +36,7 @@ public class NewsServiceImpl  implements NewsService {
     }
 
     @Override
-    public boolean updateNews(News news) {
+    public boolean updateNews(Nd_News news) {
         if(dao.updateNews(news)>0){
             return true;
         }

@@ -7,8 +7,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 import java.sql.Date;
-@Document(indexName = "news",type = "doc",shards = 1,replicas = 0)
-public class News implements Serializable {
+@Document(indexName = "nd_news",shards = 1,replicas = 0)
+public class Nd_News implements Serializable {
     @Id
     private String news_id;
     private Integer news_type,news_level,news_index,news_status;
@@ -19,7 +19,7 @@ public class News implements Serializable {
 
     @Override
     public String toString() {
-        return "News{" +
+        return "Nd_News{" +
                 "news_id=" + news_id +
                 ", news_type=" + news_type +
                 ", news_level=" + news_level +
