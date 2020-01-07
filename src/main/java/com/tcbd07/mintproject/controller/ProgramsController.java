@@ -1,17 +1,22 @@
 package com.tcbd07.mintproject.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tcbd07.mintproject.entity.ProgramsVo;
 import com.tcbd07.mintproject.entity.User;
 import com.tcbd07.mintproject.service.ProgramsVoService;
 import com.tcbd07.mintproject.util.ResultMessage;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @Api(tags = "项目及商家展示")
 public class ProgramsController {
@@ -51,6 +56,9 @@ public class ProgramsController {
         List<User> userList = programsVoService.getAllFirms(firmId);
         return ResultMessage.success(userList);
     }
+
+
+
 
 
 

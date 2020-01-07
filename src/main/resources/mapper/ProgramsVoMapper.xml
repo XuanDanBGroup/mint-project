@@ -18,6 +18,7 @@
             <result property="userPassword" column="user_password"></result>
             <result property="userRole" column="user_role"></result>
             <result property="userStatus" column="user_status"></result>
+            <result property="userWechart" column="user_wechart"></result>
         </collection>
     </resultMap>
     <resultMap id="m2" type="com.tcbd07.mintproject.entity.User">
@@ -27,6 +28,7 @@
         <result property="userPassword" column="user_password"></result>
         <result property="userRole" column="user_role"></result>
         <result property="userStatus" column="user_status"></result>
+        <result property="userWechart" column="user_wechart"></result>
     </resultMap>
     <select id="getProgramsVo" resultMap="m1" parameterType="String">
         select p.* ,u.* from nd_programs p,nd_users u ,mid_programs_firms f

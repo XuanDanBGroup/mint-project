@@ -12,6 +12,7 @@
         <result property="userPassword" column="user_password"></result>
         <result property="userRole" column="user_role"></result>
         <result property="userStatus" column="user_status"></result>
+        <result property="userWechart" column="user_wechart"></result>
     </resultMap>
 
 

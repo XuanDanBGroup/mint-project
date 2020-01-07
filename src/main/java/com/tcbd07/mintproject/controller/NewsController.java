@@ -38,15 +38,11 @@ public class NewsController {
     @GetMapping("/newsList")
     public ResultMessage newsList(@RequestParam(name = "title",defaultValue = "") String title){
         List<News> newsList=null;
-
             if(title==null||title.equals((""))){
-
                 newsList=newsESService.getAllNews();
             }else{
-
                 newsList=newsESService.getNewsByTitle(title);
             }
-
         return ResultMessage.success(newsList);
     }
     @ApiOperation(value = "查询我的新闻",notes = "点击我的新闻进入")
