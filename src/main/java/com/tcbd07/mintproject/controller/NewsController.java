@@ -41,12 +41,9 @@ public class NewsController {
     @GetMapping("/newsList")
     public ResultMessage newsList(@RequestParam(name = "title",defaultValue = "") String title){
         List<Nd_News> newsList=null;
-
             if(EmptyUtils.isEmpty(title)){
-
                 newsList=newsESService.getAllNews();
             }else{
-
                 newsList=newsESService.getNewsByTitle(title);
             }
 

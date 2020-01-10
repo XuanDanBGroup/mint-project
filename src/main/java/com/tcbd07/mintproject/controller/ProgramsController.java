@@ -53,6 +53,7 @@ public class ProgramsController {
     })
     @GetMapping("/getAllFirms")
     public ResultMessage getAllFirms(String firmId){
+        System.out.println(firmId);
         List<User> userList = programsVoService.getAllFirms(firmId);
         return ResultMessage.success(userList);
     }
